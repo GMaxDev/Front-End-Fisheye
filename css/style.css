@@ -19,6 +19,20 @@ h1 {
     margin-right: 100px;
 }
 
+h2, h3, h4, h5 {
+    margin: 5px 0 0 ;
+    font-weight: 400;
+
+}
+
+h3 {
+    color: #901C1C;
+}
+
+h4 {
+    font-weight: 600;
+}
+
 .logo {
     height: 50px;
     margin-left: 100px;
@@ -47,4 +61,8 @@ h1 {
 .photographer_section article img {
     height: 200px;
     width: 200px;
+    object-fit: cover;
+    overflow: hidden;
+    clip-path: circle(35%);
+    transform: scale(1.5);
 }
