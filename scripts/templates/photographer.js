@@ -1,10 +1,11 @@
 function photographerTemplate(data) {
-    const { name, portrait, city, country, tagline, price } = data;
+    const { name, id, portrait, city, country, tagline, price } = data;
 
     const picture = `assets/photographers/${portrait}`;
 
     function getUserCardDOM() {
         const article = document.createElement( 'article' );
+        article.setAttribute("id", id)
         const img = document.createElement( 'img' );
         img.setAttribute("src", picture)
         const h2 = document.createElement( 'h2' );
@@ -20,8 +21,15 @@ function photographerTemplate(data) {
         article.appendChild(h3);
         article.appendChild(h4);
         article.appendChild(h5);
-        return (article);
-    }
-    return { name, picture, city, country, tagline, price, getUserCardDOM }
-}
 
+        // J'ajoute un gestionnaire d'événements "click" à l'article
+        article.addEventListener('click', () => {
+            const clickedId = article.id;
+            const newPageURL = `http://127.0.0.1:5500/photographer.html?id=${clickedId}`;
+            window.location.href = newPageURL;
+        });
+
+        return article;
+    }
+    return { name, id, picture, city, country, tagline, price, getUserCardDOM }
+}
