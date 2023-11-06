@@ -25,7 +25,7 @@ function photographerTemplate(data) {
         // J'ajoute un gestionnaire d'événements "click" à l'article
         article.addEventListener('click', () => {
             const clickedId = article.id;
-            const newPageURL = `http://127.0.0.1:5500/photographer.html?id=${clickedId}`;
+            const newPageURL = `/photographer.html?id=${clickedId}`;
             window.location.href = newPageURL;
         });
 

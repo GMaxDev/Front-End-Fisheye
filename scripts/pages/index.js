@@ -30,9 +30,3 @@ async function init() {
 }
 
 init();
-
-const logoImage = document.querySelector('.logo');
-logoImage.addEventListener('click', function() {
-window.location.href = 'index.html';
-});
-
