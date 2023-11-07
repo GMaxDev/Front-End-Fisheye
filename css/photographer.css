@@ -1,3 +1,40 @@
+/* --------------- BODY -------------- */
+
+.photograph-header {
+    padding: 0 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.photographer-info h1 {
+    margin: 0;
+    font-size: 4em;
+    font-weight: 400;
+    color: #d3573c;
+}
+
+.photographer-info h2 {
+    color: #901C1C;
+    margin: 0;
+}
+
+.photographer-info h3 {
+    color: #000;
+    margin: 1em 0;
+}
+
+.photograph-header img {
+    height: 200px;
+    width: 200px;
+    object-fit: cover;
+    overflow: hidden;
+    clip-path: circle(35%);
+    transform: scale(1.5);
+}
+
+/* --------------- MODAL -------------- */
+
 #contact_modal {
     display: none;
 }
