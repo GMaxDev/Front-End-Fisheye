@@ -45,25 +45,44 @@ fetch(dataJson)
 
         //----------------------------------------------
 
+        // Je crée une liste dans laquelle les photos seront placées
+        const ul = document.createElement('ul')
+        ul.setAttribute('id', 'medias-list')
+        main.appendChild(ul)
+
+        // Je filtre mon jsn pour ne conserver dans un tableau que les photos du photographe avec le bon ID
         const photographerMedias = data.media.filter(media => media.photographerId === photographerId);
         console.log(photographerMedias)
         console.log(photographerMedias.length)
 
+        // J'instancie ma class MediasPhotographers
         const photo = photographerMedias.map(item => new MediasPhotographers(
             {media:item}
         ))
-
+        
+        // Je récupère le nom du dossier image en fonction du nom du photographe
         const namePart = photographerName.split(' ')
+        // Je remplace les tirets par des espaces
         let shortName = namePart.slice(0, -1).join(' ')
         console.log(shortName)
         shortName = shortName.replace(/-/g, ' ')
 
+        // Je boucle pour afficher mes images
         photo.forEach(media => {
             const cheminImage = `assets/images/list_medias_photographers/${shortName}/${media.image}`;
+            const li = document.createElement('li')
+            li.setAttribute('class', 'media-element')
             const imageElement = document.createElement('img');
             imageElement.src = cheminImage;
-
-            main.appendChild(imageElement)
+            const imageTitle = document.createElement('h4')
+            imageTitle.textContent = media.title
+            const imageLike = document.createElement('p')
+            imageLike.innerHTML  = `${media.likes} &#9829`
+            // imageLike.textContent = `${media.likes} <i class="fa-solid fa-heart"></i>`
+            ul.appendChild(li)
+            li.appendChild(imageElement)
+            li.appendChild(imageTitle)
+            li.appendChild(imageLike)
         });
 
         //----------------------------------------------

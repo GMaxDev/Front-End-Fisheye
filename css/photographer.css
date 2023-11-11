@@ -33,11 +33,35 @@
     transform: scale(1.5);
 }
 
-main img {
+/* ---------------- LIST IMAGES--------------- */
+
+ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.media-element {
+    width: 350px;
+    height: 350px;
+    list-style: none;
+    margin: 10px;
+}
+
+.media-element img {
     width: 350px;
     height: 300px;
-
+    border-radius: 5px;
     object-fit: cover;
+}
+
+.media-element h4 {
+    font-weight: 400;
+    color: #901C1C;
+}
+
+.media-element i {
+    font-size: 20px;
 }
 
 /* --------------- MODAL -------------- */
