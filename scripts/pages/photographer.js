@@ -11,6 +11,7 @@ fetch('/data/photographers.json')
     const photographer = data.photographers.find(item => item.id === parseInt(idParam));
 
     if (photographer) {
+        const photographerId = photographer.id;
         const photographerName = photographer.name;
         const photographerCity = photographer.city
         const photographerCountry = photographer.country
@@ -39,6 +40,33 @@ fetch('/data/photographers.json')
         div.appendChild(h2)
         div.appendChild(h3)
         header.appendChild(img)
+
+        const photographerMedias = data.media.filter(media => media.photographerId === photographerId);
+        console.log(photographerMedias)
+        console.log(photographerMedias.length)
+
+        // for(i=0; i<photographerMedias.length; i++){
+        //     const photoMedia = document.createElement('div')
+        //     const photoMediaImg = document.createElement('img')
+        //     photoMedia.setAttribute("class", `media-photographer`)
+        //     photoMediaImg.setAttribute("src", photographerMedias.image)
+        // }
+
+        //----------------------------------------------
+
+        const modal = document.getElementById(`modal-header`)
+        if (modal) {
+            const modalH2 = modal.querySelector('h2')
+            if(modalH2){
+                console.log("text")
+                modalH2.textContent += ' ' + photographerName;
+            }
+            else{
+                console.error("Pas de h2")
+            }
+        } else {
+            console.error("L'élément avec la classe 'modal-header' est introuvable.");
+        }
 
     } else {
     console.error('Aucun photographe trouvé avec l\'ID ' + idParam);
