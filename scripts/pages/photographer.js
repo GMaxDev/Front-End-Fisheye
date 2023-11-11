@@ -2,9 +2,10 @@
 // On récupère l'ID passé en paramètre
 const urlParams = new URLSearchParams(window.location.search);
 const idParam = urlParams.get('id');
+const dataJson = '/data/photographers.json'
 console.log(`ID: ${idParam}`)
 
-fetch('/data/photographers.json')
+fetch(dataJson)
 .then(response => response.json())
 .then(data => {
     // On recherche le photographe avec l'ID correspondant
@@ -21,6 +22,7 @@ fetch('/data/photographers.json')
 
         //-----------------------------------------------------------------------
 
+        const main = document.querySelector('main')
         const header = document.querySelector(`.photograph-header`)
         const div = document.createElement('div');
         div.setAttribute("class", `photographer-info`)
@@ -41,29 +43,38 @@ fetch('/data/photographers.json')
         div.appendChild(h3)
         header.appendChild(img)
 
+        //----------------------------------------------
+
         const photographerMedias = data.media.filter(media => media.photographerId === photographerId);
         console.log(photographerMedias)
         console.log(photographerMedias.length)
 
-        // for(i=0; i<photographerMedias.length; i++){
-        //     const photoMedia = document.createElement('div')
-        //     const photoMediaImg = document.createElement('img')
-        //     photoMedia.setAttribute("class", `media-photographer`)
-        //     photoMediaImg.setAttribute("src", photographerMedias.image)
-        // }
+        const photo = photographerMedias.map(item => new MediasPhotographers(
+            {media:item}
+        ))
+
+        const namePart = photographerName.split(' ')
+        let shortName = namePart.slice(0, -1).join(' ')
+        console.log(shortName)
+        shortName = shortName.replace(/-/g, ' ')
+
+        photo.forEach(media => {
+            const cheminImage = `assets/images/list_medias_photographers/${shortName}/${media.image}`;
+            const imageElement = document.createElement('img');
+            imageElement.src = cheminImage;
+
+            main.appendChild(imageElement)
+        });
 
         //----------------------------------------------
 
         const modal = document.getElementById(`modal-header`)
         if (modal) {
             const modalH2 = modal.querySelector('h2')
-            if(modalH2){
-                console.log("text")
+            if(modalH2)
                 modalH2.textContent += ' ' + photographerName;
-            }
-            else{
+            else
                 console.error("Pas de h2")
-            }
         } else {
             console.error("L'élément avec la classe 'modal-header' est introuvable.");
         }
