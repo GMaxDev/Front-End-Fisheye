@@ -1,8 +1,8 @@
-//Mettre le code JavaScript lié à la page photographer.html
 // On récupère l'ID passé en paramètre
 const urlParams = new URLSearchParams(window.location.search);
 const idParam = urlParams.get('id');
 const dataJson = '/data/photographers.json'
+let totalLikes = 0
 console.log(`ID: ${idParam}`)
 
 fetch(dataJson)
@@ -17,6 +17,7 @@ fetch(dataJson)
         const photographerCity = photographer.city
         const photographerCountry = photographer.country
         const photographerTagline = photographer.tagline
+        const photographerPrice = photographer.price
         const photographerPortrait = `assets/photographers/${photographer.portrait}`
         console.log('Nom du photographe : ' + photographerName);
 
@@ -72,6 +73,8 @@ fetch(dataJson)
             const cheminImage = `assets/images/list_medias_photographers/${shortName}/${media.image}`;
             const li = document.createElement('li')
             li.setAttribute('class', 'media-element')
+            const div = document.createElement('div')
+            div.setAttribute('class', 'photo-data')
             const imageElement = document.createElement('img');
             imageElement.src = cheminImage;
             const imageTitle = document.createElement('h4')
@@ -81,9 +84,27 @@ fetch(dataJson)
             // imageLike.textContent = `${media.likes} <i class="fa-solid fa-heart"></i>`
             ul.appendChild(li)
             li.appendChild(imageElement)
-            li.appendChild(imageTitle)
-            li.appendChild(imageLike)
+            li.appendChild(div)
+            div.appendChild(imageTitle)
+            div.appendChild(imageLike)
+
+            totalLikes += media.likes;
         });
+
+        //----------------------------------------------
+
+        const aside = document.createElement('aside')
+        aside.setAttribute('id', 'photographer-specs')
+        main.appendChild(aside)
+
+        const allLikes = document.createElement('p')
+        allLikes.innerHTML = `${totalLikes} &#9829`
+        aside.appendChild(allLikes)
+
+
+        const pricePhotorapher = document.createElement('p')
+        pricePhotorapher.textContent = `${photographerPrice} € / jour`
+        aside.appendChild(pricePhotorapher)
 
         //----------------------------------------------
 
