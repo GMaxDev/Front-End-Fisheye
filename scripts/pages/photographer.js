@@ -93,6 +93,30 @@ fetch(dataJson)
 
         //----------------------------------------------
 
+        const mediaElements = document.querySelectorAll('.media-element img');
+
+        mediaElements.forEach((img, index) => {
+            img.addEventListener('click', () => {
+                openFullScreen(index);
+            });
+        });
+        
+        function openFullScreen(index) {
+            const imgModal = document.getElementById('img_modal');
+            imgModal.style.display = 'block'; // Afficher la modal
+        
+            const fullSizeImg= document.getElementById('fullSizeImage')
+            displayFullSizeImage(index, fullSizeImg); // Afficher l'image cliquée
+            currentIndex = index; // Mettre à jour l'index courant
+        }
+        
+        function displayFullSizeImage(index, fullSizeImg) {
+            const selectedImage = mediaElements[index].src;
+            fullSizeImg.innerHTML = `<img src="${selectedImage}" />`; // Afficher l'image dans la div fullSizeImage
+        }         
+
+        // ---------------------------------------------
+
         const aside = document.createElement('aside')
         aside.setAttribute('id', 'photographer-specs')
         main.appendChild(aside)
@@ -100,7 +124,6 @@ fetch(dataJson)
         const allLikes = document.createElement('p')
         allLikes.innerHTML = `${totalLikes} &#9829`
         aside.appendChild(allLikes)
-
 
         const pricePhotorapher = document.createElement('p')
         pricePhotorapher.textContent = `${photographerPrice} € / jour`
@@ -122,7 +145,9 @@ fetch(dataJson)
     } else {
     console.error('Aucun photographe trouvé avec l\'ID ' + idParam);
     }
+
 })
 .catch(error => {
     console.error('Erreur lors du chargement du JSON :', error);
 });
+

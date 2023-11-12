@@ -83,7 +83,6 @@ ul {
 }
 
 .media-element h4 {
-    font-weight: 400;
 }
 
 .media-element i {
@@ -92,7 +91,7 @@ ul {
 
 .photo-data {
     height: 30px;
-    margin: 0 5px;
+    margin: 0 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -101,6 +100,7 @@ ul {
 
 .photo-data p {
     cursor: pointer;
+    font-weight: 600;
 }
 
 /* --------------- MODAL -------------- */
@@ -201,4 +201,59 @@ form input {
 
 #formContent {
     height: 5em;
+}
+
+/* ----------------------- */
+
+#img_modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    z-index: 100;
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.closeBtn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    
+}
+
+.img_modal_content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    /* z-index: 10; */
+}
+
+.img_modal_content button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    background: none;
+    border: none;
+}
+
+#fullSizeImage {
+    display: flex;
+    align-items: center;
+    width: auto; /* Ajustez la largeur selon vos besoins */
+    height: 100vh;
+}
+
+#fullSizeImage img {
+    max-width: auto;
+    height: 80vh;
+    object-fit: contain;
 }
