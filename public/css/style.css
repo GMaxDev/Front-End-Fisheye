@@ -33,6 +33,11 @@ h4 {
     font-weight: 600;
 }
 
+.closeBtn {
+  background: none;
+  border: none;
+}
+
 .logo {
     height: 50px;
     margin-left: 100px;

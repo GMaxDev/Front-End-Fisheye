@@ -1,4 +1,5 @@
 import { MediasPhotographers } from "../models/MediasPhotographers";
+import { closeModal, displayModal } from '../utils/contactForm';
 import { displayModalImg, closeModalImg } from "../utils/displayBigImg";
 // On récupère l'ID passé en paramètre
 const urlParams = new URLSearchParams(window.location.search);
@@ -7,6 +8,19 @@ const dataJson = '/data/photographers.json'
 let currentIndex = 0;
 let totalLikes = 0
 console.log(`ID: ${idParam}`)
+
+const contactButtonElement = document.querySelector('.contact_button');
+contactButtonElement.addEventListener('click', displayModal);
+
+const modalButtonCloseElement = document.querySelector(
+  '#modal-header .closeBtn',
+);
+modalButtonCloseElement.addEventListener('click', closeModal);
+
+const imgModalButtonCloseElement = document.querySelector(
+  '#img_modal .closeBtn',
+);
+imgModalButtonCloseElement.addEventListener('click', closeModalImg);
 
 fetch(dataJson)
 .then(response => response.json())
