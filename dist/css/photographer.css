@@ -206,6 +206,7 @@ form input {
 /* ----------------------- */
 
 #img_modal {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -223,7 +224,7 @@ form input {
     position: absolute;
     top: 10px;
     right: 20px;
-    
+    cursor: pointer;
 }
 
 .img_modal_content {
@@ -243,6 +244,7 @@ form input {
     height: 50px;
     background: none;
     border: none;
+    cursor: pointer;
 }
 
 #fullSizeImage {

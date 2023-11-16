@@ -1,7 +1,10 @@
+import { MediasPhotographers } from "../models/MediasPhotographers";
+import { displayModalImg, closeModalImg } from "../utils/displayBigImg";
 // On récupère l'ID passé en paramètre
 const urlParams = new URLSearchParams(window.location.search);
 const idParam = urlParams.get('id');
 const dataJson = '/data/photographers.json'
+let currentIndex = 0;
 let totalLikes = 0
 console.log(`ID: ${idParam}`)
 
@@ -80,7 +83,10 @@ fetch(dataJson)
             const imageTitle = document.createElement('h4')
             imageTitle.textContent = media.title
             const imageLike = document.createElement('p')
-            imageLike.innerHTML  = `${media.likes} &#9829`
+            imageLike.innerHTML  = `${media.likes} <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9.5 18.35L8.23125 17.03C3.725 12.36 0.75 9.28 0.75 5.5C0.75 2.42 2.8675 0 5.5625 0C7.085 0 8.54625 0.81 9.5 2.09C10.4537 0.81 11.915 0 13.4375 0C16.1325 0 18.25 2.42 18.25 5.5C18.25 9.28 15.275 12.36 10.7688 17.04L9.5 18.35Z" fill="#911C1C"/>
+            </svg>
+            `
             // imageLike.textContent = `${media.likes} <i class="fa-solid fa-heart"></i>`
             ul.appendChild(li)
             li.appendChild(imageElement)
@@ -89,6 +95,10 @@ fetch(dataJson)
             div.appendChild(imageLike)
 
             totalLikes += media.likes;
+
+            imageElement.addEventListener('click', () => {
+                openFullScreen(index, document.getElementById('fullSizeImage'));
+            });
         });
 
         //----------------------------------------------
@@ -97,16 +107,15 @@ fetch(dataJson)
 
         mediaElements.forEach((img, index) => {
             img.addEventListener('click', () => {
-                openFullScreen(index);
+                openFullScreen(index, document.getElementById('fullSizeImage'));
             });
         });
         
-        function openFullScreen(index) {
+        function openFullScreen(index, fullSizeImg) {
             const imgModal = document.getElementById('img_modal');
-            imgModal.style.display = 'block'; // Afficher la modal
-        
-            const fullSizeImg= document.getElementById('fullSizeImage')
-            displayFullSizeImage(index, fullSizeImg); // Afficher l'image cliquée
+            imgModal.style.display = 'block';
+            // const fullSizeImg = document.getElementById('fullSizeImage')
+            displayFullSizeImage(index, fullSizeImg);
             currentIndex = index; // Mettre à jour l'index courant
         }
         
@@ -115,6 +124,21 @@ fetch(dataJson)
             fullSizeImg.innerHTML = `<img src="${selectedImage}" />`; // Afficher l'image dans la div fullSizeImage
         }         
 
+        // Gestionnaire d'événement pour la flèche gauche
+        document.getElementById('leftDirection').addEventListener('click', () => {
+            if (currentIndex > 0) {
+            currentIndex--; // Aller à l'image précédente si l'index est supérieur à 0
+            displayFullSizeImage(currentIndex, document.getElementById('fullSizeImage'));
+            }
+        });
+        
+        // Gestionnaire d'événement pour la flèche droite
+        document.getElementById('rightDirection').addEventListener('click', () => {
+            if (currentIndex < mediaElements.length - 1) {
+            currentIndex++; // Aller à l'image suivante si l'index est inférieur à la longueur totale des images
+            displayFullSizeImage(currentIndex, document.getElementById('fullSizeImage'));
+            }
+        });
         // ---------------------------------------------
 
         const aside = document.createElement('aside')
@@ -150,4 +174,3 @@ fetch(dataJson)
 .catch(error => {
     console.error('Erreur lors du chargement du JSON :', error);
 });
-

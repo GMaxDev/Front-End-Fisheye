@@ -1,4 +1,5 @@
-function photographerTemplate(data) {
+// Ajoute l'exportation de photographerTemplate
+export function photographerTemplate(data) {
     const { name, id, portrait, city, country, tagline, price } = data;
 
     const picture = `assets/photographers/${portrait}`;
@@ -31,5 +32,5 @@ function photographerTemplate(data) {
 
         return article;
     }
-    return { name, id, picture, city, country, tagline, price, getUserCardDOM }
+    return { name, id, picture, city, country, tagline, price, getUserCardDOM };
 }

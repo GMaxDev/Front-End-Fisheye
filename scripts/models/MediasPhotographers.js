@@ -1,4 +1,4 @@
-class MediasPhotographers{
+export class MediasPhotographers{
     constructor(data) {
         this._id = data.media.id
         this._photographersId = data.media.photographersId

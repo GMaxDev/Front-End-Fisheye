@@ -1,0 +1,261 @@
+/* --------------- BODY -------------- */
+
+.photograph-header {
+    padding: 0 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.photographer-info h1 {
+    margin: 0;
+    font-size: 4em;
+    font-weight: 400;
+    color: #d3573c;
+}
+
+.photographer-info h2 {
+    color: #901C1C;
+    margin: 0;
+}
+
+.photographer-info h3 {
+    color: #000;
+    margin: 1em 0;
+}
+
+.photograph-header img {
+    height: 200px;
+    width: 200px;
+    object-fit: cover;
+    overflow: hidden;
+    clip-path: circle(35%);
+    transform: scale(1.5);
+}
+
+/* ---------------- PHOTOGRAPHER PRICING--------------- */
+
+#photographer-specs {
+    position: fixed;
+    display: flex;
+    width: 200px;
+    height: 50px;
+    bottom: 0px;
+    right: 20px;
+    background: #DB8876;
+    border-radius: 5px 5px 0 0;
+
+    justify-content: space-around;
+    align-items: center;
+}
+
+#photographer-specs p {
+    font-weight: 600;
+}
+
+/* ---------------- LIST IMAGES--------------- */
+
+ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.media-element {
+    width: 350px;
+    height: 350px;
+    list-style: none;
+    margin: 10px;
+    transition: all 0.1s;
+    border-radius: 5px;
+}
+
+.media-element:hover {
+    box-shadow: 0px 0px 14px -6px #000000;
+}
+
+.media-element img {
+    width: 350px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 5px 5px 0 0;
+    cursor: pointer;
+}
+
+.media-element h4 {
+}
+
+.media-element i {
+    font-size: 20px;
+}
+
+.photo-data {
+    height: 30px;
+    margin: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #901C1C;
+}
+
+.photo-data p {
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* --------------- MODAL -------------- */
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #c4c4c4;
+    opacity: 40%;
+}
+
+#contact_modal {
+    display: none;
+    position: absolute;
+    width: 100%;
+    justify-content: center;
+    z-index: 1;
+    top: 5%;
+}
+
+.photograph-header {
+    background-color: #FAFAFA;
+    height: 300px;
+    margin: 0 100px;
+}
+
+.contact_button {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    padding: 11px;
+    width: 170px;
+    height: 70px;
+    border: none;
+    background-color: #901C1C;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal {
+    border-radius: 5px;
+    background-color: #DB8876;
+    width: 750px;
+    display: flex;
+    flex-direction: column;
+    padding: 35px;
+    margin: 0;
+    box-shadow: -5px 10px 30px 0 rgba(0, 0, 0, 0.25);
+}
+
+.modal header {
+    justify-content: space-between;
+    width: 100%;
+}
+
+.modal header img {
+    cursor: pointer;
+}
+
+.modal header h2 {
+    font-size: 64px;
+    font-weight: normal;
+    text-align: center;
+}
+
+form {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+form label {
+    color: #312E2E;
+    font-size: 36px;
+}
+
+form div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: self-start;
+    margin-bottom: 26px;
+}
+
+form input {
+    font-size: 2em;
+    padding-left: 0.2em;
+    width: 100%;
+    height: 68px;
+    border: none;
+    border-radius: 5px;
+}
+
+#formContent {
+    height: 5em;
+}
+
+/* ----------------------- */
+
+#img_modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    z-index: 100;
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.closeBtn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.img_modal_content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    /* z-index: 10; */
+}
+
+.img_modal_content button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+#fullSizeImage {
+    display: flex;
+    align-items: center;
+    width: auto; /* Ajustez la largeur selon vos besoins */
+    height: 100vh;
+}
+
+#fullSizeImage img {
+    max-width: auto;
+    height: 80vh;
+    object-fit: contain;
+}
