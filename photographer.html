@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <link href="css/style.css" rel="stylesheet" type="text/css" />
   <link href="css/photographer.css" rel="stylesheet" type="text/css" />
@@ -18,7 +17,7 @@
   </header>
   <main id="main">
     <div class="photograph-header">
-      <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
+      <button class="contact_button" type="button">Contactez-moi</button>
     </div>
   </main>
   <div id="overlay" class="overlay"></div>
@@ -26,7 +25,9 @@
     <div class="modal">
       <header id="modal-header">
         <h2>Contactez-moi</h2>
-        <img src="assets/icons/close.svg" onclick="closeModal()" />
+        <button type="button" class="closeBtn">
+          <img src="assets/icons/close.svg" />
+        </button>
       </header>
       <form>
         <div>
@@ -44,22 +45,22 @@
     </div>
   </div>
   <div id="img_modal">
-    <img class="closeBtn" src="assets/icons/close-dark.svg" onclick="closeModalImg()" />
+    <button type="button" class="closeBtn">
+      <img src="assets/icons/close-dark.svg" />
+    </button>
     <div class="img_modal_content">
       <button id="leftDirection">
         <img src="assets/icons/left.svg" />
       </button>
-      <div id="fullSizeImage">
-      </div>
+      <div id="fullSizeImage"></div>
       <button id="rightDirection">
         <img src="assets/icons/right.svg" />
       </button>
     </div>
   </div>
-  <script type="module" src="/scripts/utils/displayBigImg.js"></script>
-  <script type="module" src="/scripts/models/MediasPhotographers.js"></script>
-  <script type="module" src="/scripts/pages/photographer.js"></script>
-  <script type="module" src="/scripts/utils/contactForm.js"></script>
+  <script type="module" src="./scripts/utils/displayBigImg.js"></script>
+  <script type="module" src="./scripts/models/MediasPhotographers.js"></script>
+  <script type="module" src="./scripts/pages/photographer.js"></script>
+  <script type="module" src="./scripts/utils/contactForm.js"></script>
 </body>
-
 </html>
