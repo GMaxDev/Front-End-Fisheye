@@ -12,13 +12,11 @@ console.log(`ID: ${idParam}`)
 const contactButtonElement = document.querySelector('.contact_button');
 contactButtonElement.addEventListener('click', displayModal);
 
-const modalButtonCloseElement = document.querySelector(
-  '#modal-header .closeBtn',
+const modalButtonCloseElement = document.querySelector('#modal-header .closeBtn',
 );
 modalButtonCloseElement.addEventListener('click', closeModal);
 
-const imgModalButtonCloseElement = document.querySelector(
-  '#img_modal .closeBtn',
+const imgModalButtonCloseElement = document.querySelector('#img_modal .closeBtn',
 );
 imgModalButtonCloseElement.addEventListener('click', closeModalImg);
 
@@ -77,7 +75,7 @@ fetch(dataJson)
         const photo = photographerMedias.map(item => new MediasPhotographers(
             {media:item}
         ))
-        
+    
         // Je récupère le nom du dossier image en fonction du nom du photographe
         const namePart = photographerName.split(' ')
         // Je remplace les tirets par des espaces
@@ -85,57 +83,73 @@ fetch(dataJson)
         console.log(shortName)
         shortName = shortName.replace(/-/g, ' ')
 
-        // Je boucle pour afficher mes images
-        photo.forEach(media => {
-            const cheminImage = `assets/images/list_medias_photographers/${shortName}/${media.image}`;
-            const li = document.createElement('li')
-            li.setAttribute('class', 'media-element')
-            const div = document.createElement('div')
-            div.setAttribute('class', 'photo-data')
-            const imageElement = document.createElement('img');
-            imageElement.src = cheminImage;
-            const imageTitle = document.createElement('h4')
-            imageTitle.textContent = media.title
-            const imageLike = document.createElement('p')
-            imageLike.innerHTML  = `${media.likes} <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9.5 18.35L8.23125 17.03C3.725 12.36 0.75 9.28 0.75 5.5C0.75 2.42 2.8675 0 5.5625 0C7.085 0 8.54625 0.81 9.5 2.09C10.4537 0.81 11.915 0 13.4375 0C16.1325 0 18.25 2.42 18.25 5.5C18.25 9.28 15.275 12.36 10.7688 17.04L9.5 18.35Z" fill="#911C1C"/>
-            </svg>
-            `
-            // imageLike.textContent = `${media.likes} <i class="fa-solid fa-heart"></i>`
-            ul.appendChild(li)
-            li.appendChild(imageElement)
-            li.appendChild(div)
-            div.appendChild(imageTitle)
-            div.appendChild(imageLike)
+// Je boucle pour afficher mes images
+photo.forEach((media, index) => {
+    let mediaElement;
 
-            totalLikes += media.likes;
+    if (media.image) {
+        const cheminImage = `assets/images/list_medias_photographers/${shortName}/${media.image}`;
+        mediaElement = document.createElement('img');
+        mediaElement.src = cheminImage;
+    } else if (media.video) {
+        const cheminVideo = `assets/images/list_medias_photographers/${shortName}/${media.video}`;
+        mediaElement = document.createElement('video');
+        mediaElement.src = cheminVideo;
+        mediaElement.setAttribute('type', 'video/mp4');
+        mediaElement.setAttribute('controls', '');
+        mediaElement.dataset.index = index; // Ajoutez l'index en tant qu'attribut de données
+    }
+    const li = document.createElement('li')
+    li.setAttribute('class', 'media-element')
+    const div = document.createElement('div')
+    div.setAttribute('class', 'photo-data')
+    const imageTitle = document.createElement('h4')
+    imageTitle.textContent = media.title
+    const imageLike = document.createElement('p')
+    imageLike.innerHTML  = `${media.likes} <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9.5 18.35L8.23125 17.03C3.725 12.36 0.75 9.28 0.75 5.5C0.75 2.42 2.8675 0 5.5625 0C7.085 0 8.54625 0.81 9.5 2.09C10.4537 0.81 11.915 0 13.4375 0C16.1325 0 18.25 2.42 18.25 5.5C18.25 9.28 15.275 12.36 10.7688 17.04L9.5 18.35Z" fill="#911C1C"/>
+        </svg>
+    `
+    ul.appendChild(li)
+    li.appendChild(mediaElement)
+    li.appendChild(div)
+    div.appendChild(imageTitle)
+    div.appendChild(imageLike)
 
-            imageElement.addEventListener('click', () => {
-                openFullScreen(index, document.getElementById('fullSizeImage'));
-            });
-        });
+    totalLikes += media.likes;
+
+    mediaElement.addEventListener('click', (event) => {
+        const dataIndex = event.target.dataset.index
+        openFullScreen(dataIndex, document.getElementById('fullSizeImage'));
+    });
+});
 
         //----------------------------------------------
 
-        const mediaElements = document.querySelectorAll('.media-element img');
-
-        mediaElements.forEach((img, index) => {
-            img.addEventListener('click', () => {
+        const mediaElements = document.querySelectorAll('.media-element img, .media-element video');
+        console.log(mediaElements)
+        mediaElements.forEach((media, index) => {
+            media.addEventListener('click', () => {
                 openFullScreen(index, document.getElementById('fullSizeImage'));
             });
         });
         
         function openFullScreen(index, fullSizeImg) {
-            const imgModal = document.getElementById('img_modal');
-            imgModal.style.display = 'block';
-            // const fullSizeImg = document.getElementById('fullSizeImage')
+            const mediaModal = document.getElementById('img_modal');
+            mediaModal.style.display = 'block';
             displayFullSizeImage(index, fullSizeImg);
             currentIndex = index; // Mettre à jour l'index courant
         }
         
         function displayFullSizeImage(index, fullSizeImg) {
-            const selectedImage = mediaElements[index].src;
-            fullSizeImg.innerHTML = `<img src="${selectedImage}" />`; // Afficher l'image dans la div fullSizeImage
+            const selectedMedia = mediaElements[index];
+            if (selectedMedia.tagName === 'IMG') {
+                // Si c'est une image, affichez la balise img
+                fullSizeImg.innerHTML = `<img src="${selectedMedia.src}" alt="${selectedMedia.alt}" />`;
+            } else if (selectedMedia.tagName === 'VIDEO') {
+                // Si c'est une vidéo, affichez la balise video
+                fullSizeImg.innerHTML = `<video src="${selectedMedia.src}" type="video/mp4" controls></video>`;
+            }
         }         
 
         // Gestionnaire d'événement pour la flèche gauche

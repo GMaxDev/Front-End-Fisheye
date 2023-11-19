@@ -4,6 +4,7 @@ export class MediasPhotographers{
         this._photographersId = data.media.photographersId
         this._title = data.media.title
         this._image = data.media.image
+        this._video = data.media.video
         this._likes = data.media.likes
         this._date = data.media.date
         this._price = data.media.price
@@ -22,7 +23,11 @@ export class MediasPhotographers{
     }
 
     get image(){
-        return this._image
+        return this._image;
+    }
+
+    get video(){
+        return this._video;
     }
 
     get likes(){
