@@ -153,10 +153,14 @@ fetch(dataJson)
                     itemsArray.sort((a, b) => (isAscending ? a.likes - b.likes : b.likes - a.likes));
                     break;
                 case 'date':
-                  // Mettez ici votre logique de tri pour Date
+                    itemsArray.sort((a, b) => {
+                        const dateA = new Date(a.date).toISOString();
+                        const dateB = new Date(b.date).toISOString();
+                        return isAscending ? dateA.localeCompare(dateB) : dateB.localeCompare(dateA);
+                    });
                     break;
                 case 'title':
-                  // Mettez ici votre logique de tri pour Titre
+                    itemsArray.sort((a, b) => (isAscending ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title)));
                     break;
                 default:
                     return;
