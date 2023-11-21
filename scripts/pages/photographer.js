@@ -1,6 +1,6 @@
 import { MediasPhotographers } from "../models/MediasPhotographers";
 import { closeModal, displayModal } from '../utils/contactForm';
-import { displayModalImg, closeModalImg } from "../utils/displayBigImg";
+import { closeModalImg } from "../utils/displayBigImg";
 // On récupère l'ID passé en paramètre
 const urlParams = new URLSearchParams(window.location.search);
 const idParam = urlParams.get('id');
@@ -68,8 +68,6 @@ fetch(dataJson)
 
         // Je filtre mon jsn pour ne conserver dans un tableau que les photos du photographe avec le bon ID
         const photographerMedias = data.media.filter(media => media.photographerId === photographerId);
-        console.log(photographerMedias)
-        console.log(photographerMedias.length)
 
         // J'instancie ma class MediasPhotographers
         const photo = photographerMedias.map(item => new MediasPhotographers(
@@ -80,54 +78,90 @@ fetch(dataJson)
         const namePart = photographerName.split(' ')
         // Je remplace les tirets par des espaces
         let shortName = namePart.slice(0, -1).join(' ')
-        console.log(shortName)
         shortName = shortName.replace(/-/g, ' ')
 
-// Je boucle pour afficher mes images
-photo.forEach((media, index) => {
-    let mediaElement;
+        // Je boucle pour afficher mes images
+        photo.forEach((media, index) => {
+            let mediaElement;
 
-    if (media.image) {
-        const cheminImage = `assets/images/list_medias_photographers/${shortName}/${media.image}`;
-        mediaElement = document.createElement('img');
-        mediaElement.src = cheminImage;
-    } else if (media.video) {
-        const cheminVideo = `assets/images/list_medias_photographers/${shortName}/${media.video}`;
-        mediaElement = document.createElement('video');
-        mediaElement.src = cheminVideo;
-        mediaElement.setAttribute('type', 'video/mp4');
-        mediaElement.setAttribute('controls', '');
-        mediaElement.dataset.index = index; // Ajoutez l'index en tant qu'attribut de données
-    }
-    const li = document.createElement('li')
-    li.setAttribute('class', 'media-element')
-    const div = document.createElement('div')
-    div.setAttribute('class', 'photo-data')
-    const imageTitle = document.createElement('h4')
-    imageTitle.textContent = media.title
-    const imageLike = document.createElement('p')
-    imageLike.innerHTML  = `${media.likes} <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M9.5 18.35L8.23125 17.03C3.725 12.36 0.75 9.28 0.75 5.5C0.75 2.42 2.8675 0 5.5625 0C7.085 0 8.54625 0.81 9.5 2.09C10.4537 0.81 11.915 0 13.4375 0C16.1325 0 18.25 2.42 18.25 5.5C18.25 9.28 15.275 12.36 10.7688 17.04L9.5 18.35Z" fill="#911C1C"/>
-        </svg>
-    `
-    ul.appendChild(li)
-    li.appendChild(mediaElement)
-    li.appendChild(div)
-    div.appendChild(imageTitle)
-    div.appendChild(imageLike)
+            if (media.image) {
+                const cheminImage = `assets/images/list_medias_photographers/${shortName}/${media.image}`;
+                mediaElement = document.createElement('img');
+                mediaElement.src = cheminImage;
+            } else if (media.video) {
+                const cheminVideo = `assets/images/list_medias_photographers/${shortName}/${media.video}`;
+                mediaElement = document.createElement('video');
+                mediaElement.src = cheminVideo;
+                mediaElement.setAttribute('type', 'video/mp4');
+                mediaElement.setAttribute('controls', '');
+                mediaElement.dataset.index = index; // Ajoutez l'index en tant qu'attribut de données
+            }
+            const li = document.createElement('li')
+            li.setAttribute('class', 'media-element')
+            const div = document.createElement('div')
+            div.setAttribute('class', 'photo-data')
+            const imageTitle = document.createElement('h4')
+            imageTitle.textContent = media.title
+            const imageLike = document.createElement('p')
+            imageLike.innerHTML  = `${media.likes} <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.5 18.35L8.23125 17.03C3.725 12.36 0.75 9.28 0.75 5.5C0.75 2.42 2.8675 0 5.5625 0C7.085 0 8.54625 0.81 9.5 2.09C10.4537 0.81 11.915 0 13.4375 0C16.1325 0 18.25 2.42 18.25 5.5C18.25 9.28 15.275 12.36 10.7688 17.04L9.5 18.35Z" fill="#911C1C"/>
+                </svg>
+            `
+            ul.appendChild(li)
+            li.appendChild(mediaElement)
+            li.appendChild(div)
+            div.appendChild(imageTitle)
+            div.appendChild(imageLike)
 
-    totalLikes += media.likes;
+            totalLikes += media.likes;
+            mediaElement.addEventListener('click', (event) => {
+                const dataIndex = event.target.dataset.index
+                openFullScreen(dataIndex, document.getElementById('fullSizeImage'));
+            });
+        });
 
-    mediaElement.addEventListener('click', (event) => {
-        const dataIndex = event.target.dataset.index
-        openFullScreen(dataIndex, document.getElementById('fullSizeImage'));
-    });
-});
+        //----------------------------------------------
+
+        document.getElementById('popularity').addEventListener('click', () => toggleFilter('popularity'))
+        document.getElementById('date').addEventListener('click', () => toggleFilter('date'))
+        document.getElementById('title').addEventListener('click', () => toggleFilter('title'))
+
+        let currentFilter = null
+        let isAscending = true
+
+        function toggleFilter(filter) { //Permet de savoir si le filtre en cours est l'inverse du précédent ou pas
+            if (currentFilter === filter) {
+                isAscending = !isAscending
+            } else {
+                currentFilter = filter
+                isAscending = true
+            }
+            sortItems(currentFilter)
+        }
+
+        function sortItems(currentFilter) {
+            // const items = document.querySelectorAll('.toto')
+            const itemsArray = Array.from(photo)
+            switch (currentFilter) {
+                case 'popularity':
+                    itemsArray.sort(function(a, b) {
+                        return a.likes - b.likes
+                    })
+                    break;
+                case 'date':
+                  // Mettez ici votre logique de tri pour Date
+                    break;
+                case 'title':
+                  // Mettez ici votre logique de tri pour Titre
+                    break;
+                default:
+                    return;
+                }
+        }
 
         //----------------------------------------------
 
         const mediaElements = document.querySelectorAll('.media-element img, .media-element video');
-        console.log(mediaElements)
         mediaElements.forEach((media, index) => {
             media.addEventListener('click', () => {
                 openFullScreen(index, document.getElementById('fullSizeImage'));
