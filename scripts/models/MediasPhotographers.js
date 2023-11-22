@@ -30,15 +30,15 @@ export class MediasPhotographers{
         return this._video;
     }
 
-    get likes(){
-        return this._likes
-    }
-
     get date(){
         return this._date
     }
 
     get price(){
         return this._price
+    }
+
+    get likes(){
+        return this._likes
     }
 }
