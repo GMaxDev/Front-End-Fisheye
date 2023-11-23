@@ -94,21 +94,23 @@ fetch(dataJson)
             // Je boucle pour afficher mes images
             photo.forEach((media, index) => {
                 let mediaElement;
-
                 if (media.image) {
                     const cheminImage = `assets/images/list_medias_photographers/${shortName}/${media.image}`;
                     mediaElement = document.createElement('img');
                     mediaElement.src = cheminImage;
+                    mediaElement.setAttribute('tabindex', '0')
                 } else if (media.video) {
                     const cheminVideo = `assets/images/list_medias_photographers/${shortName}/${media.video}`;
                     mediaElement = document.createElement('video');
                     mediaElement.src = cheminVideo;
                     mediaElement.setAttribute('type', 'video/mp4');
-                    // mediaElement.setAttribute('controls', '');
                     mediaElement.dataset.index = index; // Ajoutez l'index en tant qu'attribut de données
+                    mediaElement.setAttribute('tabindex', '0')
+
                 }
                 const button = document.createElement('button')
                 button.setAttribute('class', 'media-element')
+                button.setAttribute('tabindex', '-1')
                 const div = document.createElement('div')
                 div.setAttribute('class', 'photo-data')
                 const imageTitle = document.createElement('h4')
@@ -119,8 +121,8 @@ fetch(dataJson)
                     </svg>
                 `
                 const likeNumber = document.createElement('span')
-                likeNumber.setAttribute('id', 'native')
                 likeNumber.innerHTML  = media.likes
+                likeNumber.setAttribute('tabindex', '0')
 
                 ul.appendChild(button)
                 button.appendChild(mediaElement)
@@ -134,7 +136,7 @@ fetch(dataJson)
                 //     const dataIndex = event.target.dataset.index
                 //     openFullScreen(dataIndex, document.getElementById('fullSizeImage'));
                 // });
-                // div.addEventListener('click', () => updateLikes(likeNumber));
+                div.addEventListener('click', () => updateLikes(likeNumber));
                 mediaElement.addEventListener('click', handleMediaInteraction);
                 mediaElement.addEventListener('keydown', handleMediaInteraction);
 
@@ -143,7 +145,7 @@ fetch(dataJson)
                 if (event.type === 'click' || (event.type === 'keydown' && event.code === 'Enter')) {
                     const dataIndex = event.target.dataset.index;
                     openFullScreen(dataIndex, document.getElementById('fullSizeImage'));
-                }
+                    }
                 }
 
             });
@@ -208,6 +210,8 @@ fetch(dataJson)
             mediaModal.style.display = 'block';
             displayFullSizeImage(index, fullSizeImg);
             currentIndex = index; // Mettre à jour l'index courant
+
+            focus(document.getElementById('leftDirection'))
         }
         
         function displayFullSizeImage(index, fullSizeImg) {
@@ -223,18 +227,18 @@ fetch(dataJson)
 
         function updateLikes(span) {
             let actualLike = parseInt(span.textContent)
-            console.log(span.id)
+            console.log(span.getAttribute('data-incremented'))
             console.log(actualLike)
 
-            if(span.id === 'native') {
-                span.id = 'likeAdd'
-                actualLike++
-                totalLikes++
+            if(span.getAttribute('data-incremented') === 'true') {
+                span.removeAttribute('data-incremented')
+                actualLike -= 1
+                totalLikes -= 1
                 span.textContent = actualLike
-            } else if(span.id === 'likeAdd') {
-                span.id = 'native'
-                actualLike--
-                totalLikes--
+            } else {
+                span.setAttribute('data-incremented', 'true')
+                actualLike += 1
+                totalLikes += 1
                 span.textContent = actualLike
             }
             allLikes.innerHTML = `${totalLikes} &#9829`
