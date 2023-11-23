@@ -11,14 +11,15 @@ let photo = []
 console.log(`ID: ${idParam}`)
 
 const contactButtonElement = document.querySelector('.contact_button');
-contactButtonElement.addEventListener('click', displayModal);
+contactButtonElement.addEventListener('click', () => {
+    displayModal();
+    const modalFocus = document.getElementById('name');
+    modalFocus.focus();
+});
 
-const modalButtonCloseElement = document.querySelector('#modal-header .closeBtn',
-);
+const modalButtonCloseElement = document.querySelector('#modal-header .closeBtn');
 modalButtonCloseElement.addEventListener('click', closeModal);
-
-const imgModalButtonCloseElement = document.querySelector('#img_modal .closeBtn',
-);
+const imgModalButtonCloseElement = document.querySelector('#img_modal .closeBtn');
 imgModalButtonCloseElement.addEventListener('click', closeModalImg);
 
 document.addEventListener('keydown', (event) => {
@@ -211,7 +212,7 @@ fetch(dataJson)
             displayFullSizeImage(index, fullSizeImg);
             currentIndex = index; // Mettre à jour l'index courant
 
-            focus(document.getElementById('leftDirection'))
+            document.getElementById('leftDirection').focus()
         }
         
         function displayFullSizeImage(index, fullSizeImg) {
