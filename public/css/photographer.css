@@ -62,12 +62,15 @@ ul {
 }
 
 .media-element {
-    width: 350px;
+    position: relative;
+    width: 360px;
     height: 350px;
     list-style: none;
     margin: 10px;
     transition: all 0.1s;
     border-radius: 5px;
+    border: 0;
+    background: transparent;
 }
 
 .media-element:hover {
@@ -75,9 +78,11 @@ ul {
 }
 
 .media-element img, .media-element video{
+    position: relative;
     width: 350px;
     height: 300px;
     object-fit: cover;
+    margin-top: 5px;
     border-radius: 5px 5px 0 0;
     cursor: pointer;
 }
@@ -266,4 +271,11 @@ form input {
     max-width: auto;
     height: 70vh;
     object-fit: contain;
+}
+
+/* ------------------------------------- */
+
+.order-button {
+    position: relative;
+    height: 50px; /* Ajuste la hauteur selon tes besoins */
 }

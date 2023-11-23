@@ -51,21 +51,23 @@ h4 {
     margin-top: 100px;
 }
 
-.photographer_section article {
+.photographer_section button {
     justify-self: center;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     cursor: pointer;
+    background: transparent;
+    border: 0;
 }
 
-.photographer_section article h2 {
+.photographer_section button h2 {
     color: #D3573C;
     font-size: 36px;
 }
 
-.photographer_section article img {
+.photographer_section button img {
     height: 200px;
     width: 200px;
     object-fit: cover;

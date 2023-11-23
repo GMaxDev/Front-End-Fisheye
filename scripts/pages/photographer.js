@@ -21,6 +21,14 @@ const imgModalButtonCloseElement = document.querySelector('#img_modal .closeBtn'
 );
 imgModalButtonCloseElement.addEventListener('click', closeModalImg);
 
+document.addEventListener('keydown', (event) => {
+    // Vérifier si la touche appuyée est "Escape" (code 27)
+    if (event.key === 'Escape') {
+        closeModal()
+        closeModalImg();
+    }
+});
+
 fetch(dataJson)
 .then(response => response.json())
 .then(data => {
@@ -96,11 +104,11 @@ fetch(dataJson)
                     mediaElement = document.createElement('video');
                     mediaElement.src = cheminVideo;
                     mediaElement.setAttribute('type', 'video/mp4');
-                    mediaElement.setAttribute('controls', '');
+                    // mediaElement.setAttribute('controls', '');
                     mediaElement.dataset.index = index; // Ajoutez l'index en tant qu'attribut de données
                 }
-                const li = document.createElement('li')
-                li.setAttribute('class', 'media-element')
+                const button = document.createElement('button')
+                button.setAttribute('class', 'media-element')
                 const div = document.createElement('div')
                 div.setAttribute('class', 'photo-data')
                 const imageTitle = document.createElement('h4')
@@ -114,19 +122,30 @@ fetch(dataJson)
                 likeNumber.setAttribute('id', 'native')
                 likeNumber.innerHTML  = media.likes
 
-                ul.appendChild(li)
-                li.appendChild(mediaElement)
-                li.appendChild(div)
+                ul.appendChild(button)
+                button.appendChild(mediaElement)
+                button.appendChild(div)
                 div.appendChild(imageTitle)
                 div.appendChild(imageLike)
                 imageLike.appendChild(likeNumber)
 
                 totalLikes += media.likes;
-                mediaElement.addEventListener('click', (event) => {
-                    const dataIndex = event.target.dataset.index
+                // mediaElement.addEventListener('click', (event) => {
+                //     const dataIndex = event.target.dataset.index
+                //     openFullScreen(dataIndex, document.getElementById('fullSizeImage'));
+                // });
+                // div.addEventListener('click', () => updateLikes(likeNumber));
+                mediaElement.addEventListener('click', handleMediaInteraction);
+                mediaElement.addEventListener('keydown', handleMediaInteraction);
+
+                function handleMediaInteraction(event) {
+                // Vérifie si la touche pressée est la touche 'Entrée' (code 13) ou si c'est un clic
+                if (event.type === 'click' || (event.type === 'keydown' && event.code === 'Enter')) {
+                    const dataIndex = event.target.dataset.index;
                     openFullScreen(dataIndex, document.getElementById('fullSizeImage'));
-                });
-                div.addEventListener('click', () => updateLikes(likeNumber));
+                }
+                }
+
             });
         }
 

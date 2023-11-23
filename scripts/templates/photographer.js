@@ -5,7 +5,7 @@ export function photographerTemplate(data) {
     const picture = `assets/photographers/${portrait}`;
 
     function getUserCardDOM() {
-        const article = document.createElement( 'article' );
+        const article = document.createElement( 'button' );
         article.setAttribute("id", id)
         const img = document.createElement( 'img' );
         img.setAttribute("src", picture)
