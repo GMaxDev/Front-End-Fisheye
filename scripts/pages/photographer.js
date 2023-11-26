@@ -1,10 +1,13 @@
 import { MediasPhotographers } from "../models/MediasPhotographers";
 import { closeModal, displayModal } from '../utils/contactForm';
+import { closebuttonFilter, displaybuttonFilter } from '../utils/displayButtonFilter';
 import { closeModalImg } from "../utils/displayBigImg";
 // On récupère l'ID passé en paramètre
 const urlParams = new URLSearchParams(window.location.search);
 const idParam = urlParams.get('id');
 const dataJson = '/data/photographers.json'
+const chevron_up = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#ffffff}</style><path d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"/></svg>'
+const chevron_down = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#ffffff}</style><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>'
 let currentIndex = 0;
 let totalLikes = 0
 let photo = []
@@ -16,6 +19,13 @@ contactButtonElement.addEventListener('click', () => {
     const modalFocus = document.getElementById('name');
     modalFocus.focus();
 });
+
+const default_filter = document.getElementById('default_filter')
+const filter_buttons = document.getElementById('default_filter')
+filter_buttons.addEventListener('click', () => {
+    displaybuttonFilter()
+    filter_buttons.style.display = 'none'
+})
 
 const modalButtonCloseElement = document.querySelector('#modal-header .closeBtn');
 modalButtonCloseElement.addEventListener('click', closeModal);
@@ -156,9 +166,34 @@ fetch(dataJson)
 
         //----------------------------------------------
 
-        document.getElementById('popularity').addEventListener('click', () => toggleFilter('popularity'))
-        document.getElementById('date').addEventListener('click', () => toggleFilter('date'))
-        document.getElementById('title').addEventListener('click', () => toggleFilter('title'))
+        document.getElementById('popularity').addEventListener('click', () => {
+            toggleFilter('popularity')
+            closebuttonFilter()
+            filter_buttons.style.display = 'block'
+            default_filter.innerHTML = 'Popularité'
+        })
+        document.getElementById('date').addEventListener('click', () => {
+            toggleFilter('date')
+            closebuttonFilter()
+            filter_buttons.style.display = 'block'
+            default_filter.innerHTML = 'Date'
+        })
+        document.getElementById('title').addEventListener('click', () => {
+            toggleFilter('title')
+            closebuttonFilter()
+            filter_buttons.style.display = 'block'
+            default_filter.innerHTML = 'Titre'
+        })
+
+        if(default_filter.getAttribute('data-orderFilter') === 'true') {
+            default_filter.removeAttribute('data-orderFilter')
+            default_filter.innerHTML += ' ' + chevron_up
+        } else if (default_filter.getAttribute('data-orderFilter') === 'none'){
+            default_filter.setAttribute('data-orderFilter', 'true')
+        } else {
+            default_filter.setAttribute('data-orderFilter', 'true')
+            default_filter.innerHTML += ' ' + chevron_down
+        }
 
         let currentFilter = null
         let isAscending = true

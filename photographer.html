@@ -13,7 +13,7 @@
 <body>
   <header>
     <a href="index.html">
-      <img src="assets/images/logo.png" class="logo" />
+      <img src="assets/images/logo.png" class="logo" alt="fisheye logo" aria-label="Logo avec retour à la page d'accueil"/>
     </a>
   </header>
   <main id="main">
@@ -22,10 +22,11 @@
     </div>
     <div class="order-section">
       <p>Trier par </p>
-      <div class="order-button">
-        <button class="order contact_button" id="popularity">Popularité</button>
-        <button class="order contact_button" id="date">Date</button>
-        <button class="order contact_button" id="title">Titre</button>
+      <button class="contact_button button_filter" type="button" id="default_filter" role="Sélection du filtre des médias" data-orderFilter="none">Filtre</button>
+      <div class="order-button" id="filter_buttons">
+        <button class="contact_button button_filter" id="popularity" type="button">Popularité</button>
+        <button class="contact_button button_filter" id="date" type="button">Date</button>
+        <button class="contact_button button_filter" id="title" type="button">Titre</button>
       </div>
     </div>
   </main>
@@ -35,7 +36,7 @@
       <header id="modal-header">
         <h2>Contactez-moi</h2>
         <button type="button" class="closeBtn">
-          <img src="assets/icons/close.svg" />
+          <img src="assets/icons/close.svg" alt="Croix de fermeture de modal" role="Fermeture de modal"/>
         </button>
       </header>
       <form>
@@ -55,15 +56,15 @@
   </div>
   <div id="img_modal">
     <button type="button" class="closeBtn">
-      <img src="assets/icons/close-dark.svg" />
+      <img src="assets/icons/close-dark.svg" alt="Croix de fermeture de modal" aria-label="Fermeture de modal"/>
     </button>
     <div class="img_modal_content">
-      <button id="leftDirection">
-        <img src="assets/icons/left.svg" />
+      <button id="leftDirection" aria-label="Affiche le média précédent">
+        <img src="assets/icons/left.svg" alt="Flèche gauche" />
       </button>
       <div id="fullSizeImage"></div>
-      <button id="rightDirection">
-        <img src="assets/icons/right.svg" />
+      <button id="rightDirection" aria-label="Affiche le média suivant">
+        <img src="assets/icons/right.svg" alt="Flèche droite" />
       </button>
     </div>
   </div>
