@@ -171,28 +171,33 @@ fetch(dataJson)
             closebuttonFilter()
             filter_buttons.style.display = 'block'
             default_filter.innerHTML = 'Popularité'
+            chevron_direction()
         })
         document.getElementById('date').addEventListener('click', () => {
             toggleFilter('date')
             closebuttonFilter()
             filter_buttons.style.display = 'block'
             default_filter.innerHTML = 'Date'
+            chevron_direction()
         })
         document.getElementById('title').addEventListener('click', () => {
             toggleFilter('title')
             closebuttonFilter()
             filter_buttons.style.display = 'block'
             default_filter.innerHTML = 'Titre'
+            chevron_direction()
         })
 
-        if(default_filter.getAttribute('data-orderFilter') === 'true') {
-            default_filter.removeAttribute('data-orderFilter')
-            default_filter.innerHTML += ' ' + chevron_up
-        } else if (default_filter.getAttribute('data-orderFilter') === 'none'){
-            default_filter.setAttribute('data-orderFilter', 'true')
-        } else {
-            default_filter.setAttribute('data-orderFilter', 'true')
-            default_filter.innerHTML += ' ' + chevron_down
+        function chevron_direction(){
+            if(default_filter.getAttribute('data-orderFilter') === 'true') {
+                default_filter.removeAttribute('data-orderFilter')
+                default_filter.innerHTML += ' ' + chevron_down
+            } else if (default_filter.getAttribute('data-orderFilter') === 'none'){
+                default_filter.setAttribute('data-orderFilter', 'true')
+            } else {
+                default_filter.setAttribute('data-orderFilter', 'true')
+                default_filter.innerHTML += ' ' + chevron_up
+            }
         }
 
         let currentFilter = null
@@ -283,8 +288,18 @@ fetch(dataJson)
         // Gestionnaire d'événement pour la flèche gauche
         document.getElementById('leftDirection').addEventListener('click', () => {
             if (currentIndex > 0) {
-            currentIndex--; // Aller à l'image précédente si l'index est supérieur à 0
-            displayFullSizeImage(currentIndex, document.getElementById('fullSizeImage'));
+                currentIndex--; // Aller à l'image précédente si l'index est supérieur à 0
+                displayFullSizeImage(currentIndex, document.getElementById('fullSizeImage'));
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            // Vérifier si la touche appuyée est "Escape" (code 27)
+            if (event.key === 'ArrowLeft') {
+                if (currentIndex > 0) {
+                    currentIndex--; // Aller à l'image précédente si l'index est supérieur à 0
+                    displayFullSizeImage(currentIndex, document.getElementById('fullSizeImage'));
+                }
             }
         });
         
@@ -293,6 +308,16 @@ fetch(dataJson)
             if (currentIndex < mediaElements.length - 1) {
             currentIndex++; // Aller à l'image suivante si l'index est inférieur à la longueur totale des images
             displayFullSizeImage(currentIndex, document.getElementById('fullSizeImage'));
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            // Vérifier si la touche appuyée est "Escape" (code 27)
+            if (event.key === 'ArrowRight') {
+                if (currentIndex < mediaElements.length - 1) {
+                    currentIndex++; // Aller à l'image suivante si l'index est inférieur à la longueur totale des images
+                    displayFullSizeImage(currentIndex, document.getElementById('fullSizeImage'));
+                }
             }
         });
         // ---------------------------------------------
