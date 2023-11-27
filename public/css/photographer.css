@@ -325,3 +325,20 @@ form input {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 }
+
+@media screen and (max-width: 1024px) {
+  .photograph-header {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    padding-bottom: 1rem;
+  }
+
+  .contact_button {
+    order: 3;
+  }
+
+  .photograph-header img{
+    margin-bottom: 1rem;
+  }
+}
