@@ -5,6 +5,7 @@ import {
   displaybuttonFilter,
 } from "../utils/displayButtonFilter";
 import { closeModalImg } from "../utils/displayBigImg";
+import { updateLikes } from "../utils/updateLikes"
 // On récupère l'ID passé en paramètre
 const urlParams = new URLSearchParams(window.location.search);
 const idParam = urlParams.get("id");
@@ -159,7 +160,7 @@ fetch(dataJson)
           //     const dataIndex = event.target.dataset.index
           //     openFullScreen(dataIndex, document.getElementById('fullSizeImage'));
           // });
-          div.addEventListener("click", () => updateLikes(likeNumber));
+          div.addEventListener("click", () => updateLikes(likeNumber, totalLikes, displaLikes));
           mediaElement.addEventListener("click", handleMediaInteraction);
           mediaElement.addEventListener("keydown", handleMediaInteraction);
 
@@ -294,24 +295,24 @@ fetch(dataJson)
         }
       }
 
-      function updateLikes(span) {
-        let actualLike = parseInt(span.textContent);
-        console.log(span.getAttribute("data-incremented"));
-        console.log(actualLike);
+      // function updateLikes(span) {
+      //   let actualLike = parseInt(span.textContent);
+      //   console.log(span.getAttribute("data-incremented"));
+      //   console.log(actualLike);
 
-        if (span.getAttribute("data-incremented") === "true") {
-          span.removeAttribute("data-incremented");
-          actualLike -= 1;
-          totalLikes -= 1;
-          span.textContent = actualLike;
-        } else {
-          span.setAttribute("data-incremented", "true");
-          actualLike += 1;
-          totalLikes += 1;
-          span.textContent = actualLike;
-        }
-        allLikes.innerHTML = `${totalLikes} &#9829`;
-      }
+      //   if (span.getAttribute("data-incremented") === "true") {
+      //     span.removeAttribute("data-incremented");
+      //     actualLike -= 1;
+      //     totalLikes -= 1;
+      //     span.textContent = actualLike;
+      //   } else {
+      //     span.setAttribute("data-incremented", "true");
+      //     actualLike += 1;
+      //     totalLikes += 1;
+      //     span.textContent = actualLike;
+      //   }
+      //   allLikes.innerHTML = `${totalLikes} &#9829`;
+      // }
 
       // Gestionnaire d'événement pour la flèche gauche
       document.getElementById("leftDirection").addEventListener("click", () => {
@@ -368,9 +369,9 @@ fetch(dataJson)
       aside.setAttribute("id", "photographer-specs");
       main.appendChild(aside);
 
-      let allLikes = document.createElement("p");
-      allLikes.innerHTML = `${totalLikes} &#9829`;
-      aside.appendChild(allLikes);
+      let displaLikes = document.createElement("p");
+      displaLikes.innerHTML = `${totalLikes} &#9829`;
+      aside.appendChild(displaLikes);
 
       const pricePhotorapher = document.createElement("p");
       pricePhotorapher.textContent = `${photographerPrice} € / jour`;
