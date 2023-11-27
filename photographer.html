@@ -1,77 +1,122 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="css/photographer.css" rel="stylesheet" type="text/css" />
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link
+      href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <title>Fisheye - photographe</title>
+  </head>
 
-<head>
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
-  <link href="css/photographer.css" rel="stylesheet" type="text/css" />
-  <meta charset="utf-8">
-  <link rel="icon" type="image/png" href="assets/favicon.png">
-  <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
-  <title>Fisheye - photographe </title>
-</head>
-
-<body>
-  <header>
-    <a href="index.html">
-      <img src="assets/images/logo.png" class="logo" alt="fisheye logo" aria-label="Logo avec retour à la page d'accueil"/>
-    </a>
-  </header>
-  <main id="main">
-    <div class="photograph-header">
-      <button class="contact_button" type="button">Contactez-moi</button>
-    </div>
-    <div class="order-section">
-      <p>Trier par </p>
-      <button class="contact_button button_filter" type="button" id="default_filter" role="Sélection du filtre des médias" data-orderFilter="none">Filtre</button>
-      <div class="order-button" id="filter_buttons">
-        <button class="contact_button button_filter" id="popularity" type="button">Popularité</button>
-        <button class="contact_button button_filter" id="date" type="button">Date</button>
-        <button class="contact_button button_filter" id="title" type="button">Titre</button>
+  <body>
+    <header>
+      <a href="index.html">
+        <img
+          src="assets/images/logo.png"
+          class="logo"
+          alt="fisheye logo"
+          aria-label="Logo avec retour à la page d'accueil"
+        />
+      </a>
+    </header>
+    <main id="main">
+      <div class="photograph-header">
+        <button class="contact_button" type="button">Contactez-moi</button>
+      </div>
+      <div class="order-section">
+        <p>Trier par</p>
+        <div class="button-filter-container">
+          <button
+            class="contact_button button_filter"
+            type="button"
+            id="default_filter"
+            role="Sélection du filtre des médias"
+            data-orderFilter="none"
+          >
+            Filtre
+          </button>
+          <div class="order-button" id="filter_buttons">
+            <button
+              class="contact_button button_filter"
+              id="popularity"
+              type="button"
+            >
+              Popularité
+            </button>
+            <button
+              class="contact_button button_filter"
+              id="date"
+              type="button"
+            >
+              Date
+            </button>
+            <button
+              class="contact_button button_filter"
+              id="title"
+              type="button"
+            >
+              Titre
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div id="overlay" class="overlay"></div>
+    <div id="contact_modal">
+      <div class="modal">
+        <header id="modal-header">
+          <h2>Contactez-moi</h2>
+          <button type="button" class="closeBtn">
+            <img
+              src="assets/icons/close.svg"
+              alt="Croix de fermeture de modal"
+              role="Fermeture de modal"
+            />
+          </button>
+        </header>
+        <form>
+          <div>
+            <label>Prénom</label>
+            <input type="text" id="name" />
+            <label>Nom</label>
+            <input type="text" id="lastName" />
+            <label>Email</label>
+            <input type="email" id="mail" />
+            <label>Votre message</label>
+            <input type="text " id="formContent" />
+          </div>
+          <button class="contact_button">Envoyer</button>
+        </form>
       </div>
     </div>
-  </main>
-  <div id="overlay" class="overlay"></div>
-  <div id="contact_modal">
-    <div class="modal">
-      <header id="modal-header">
-        <h2>Contactez-moi</h2>
-        <button type="button" class="closeBtn">
-          <img src="assets/icons/close.svg" alt="Croix de fermeture de modal" role="Fermeture de modal"/>
+    <div id="img_modal">
+      <button type="button" class="closeBtn">
+        <img
+          src="assets/icons/close-dark.svg"
+          alt="Croix de fermeture de modal"
+          aria-label="Fermeture de modal"
+        />
+      </button>
+      <div class="img_modal_content">
+        <button id="leftDirection" aria-label="Affiche le média précédent">
+          <img src="assets/icons/left.svg" alt="Flèche gauche" />
         </button>
-      </header>
-      <form>
-        <div>
-          <label>Prénom</label>
-          <input type="text" id="name"/>
-          <label>Nom</label>
-          <input type="text" id="lastName" />
-          <label>Email</label>
-          <input type="email" id="mail" />
-          <label>Votre message</label>
-          <input type="text " id="formContent" />
-        </div>
-        <button class="contact_button">Envoyer</button>
-      </form>
+        <div id="fullSizeImage"></div>
+        <button id="rightDirection" aria-label="Affiche le média suivant">
+          <img src="assets/icons/right.svg" alt="Flèche droite" />
+        </button>
+      </div>
     </div>
-  </div>
-  <div id="img_modal">
-    <button type="button" class="closeBtn">
-      <img src="assets/icons/close-dark.svg" alt="Croix de fermeture de modal" aria-label="Fermeture de modal"/>
-    </button>
-    <div class="img_modal_content">
-      <button id="leftDirection" aria-label="Affiche le média précédent">
-        <img src="assets/icons/left.svg" alt="Flèche gauche"/>
-      </button>
-      <div id="fullSizeImage"></div>
-      <button id="rightDirection" aria-label="Affiche le média suivant">
-        <img src="assets/icons/right.svg" alt="Flèche droite"/>
-      </button>
-    </div>
-  </div>
-  <script type="module" src="./scripts/utils/displayBigImg.js"></script>
-  <script type="module" src="./scripts/models/MediasPhotographers.js"></script>
-  <script type="module" src="./scripts/pages/photographer.js"></script>
-  <script type="module" src="./scripts/utils/contactForm.js"></script>
-</body>
-
+    <script type="module" src="./scripts/utils/displayBigImg.js"></script>
+    <script
+      type="module"
+      src="./scripts/models/MediasPhotographers.js"
+    ></script>
+    <script type="module" src="./scripts/pages/photographer.js"></script>
+    <script type="module" src="./scripts/utils/contactForm.js"></script>
+  </body>
 </html>
