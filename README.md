@@ -2,5 +2,5 @@
 
 ## Démarrer le projet
 
-Rien à installer ici, il suffit d'ouvrir le fichier `index.html`.
+Pour installer les dépendances, veuiller utiliser npm i, puis utiliser le script npm run dev
 

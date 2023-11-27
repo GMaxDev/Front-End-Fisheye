@@ -5,7 +5,7 @@ import {
   displaybuttonFilter,
 } from "../utils/displayButtonFilter";
 import { closeModalImg } from "../utils/displayBigImg";
-import { updateLikes } from "../utils/updateLikes"
+import { updateLikes } from "../utils/updateLikes";
 // On récupère l'ID passé en paramètre
 const urlParams = new URLSearchParams(window.location.search);
 const idParam = urlParams.get("id");
@@ -160,7 +160,9 @@ fetch(dataJson)
           //     const dataIndex = event.target.dataset.index
           //     openFullScreen(dataIndex, document.getElementById('fullSizeImage'));
           // });
-          div.addEventListener("click", () => updateLikes(likeNumber, totalLikes, displaLikes));
+          div.addEventListener("click", () =>
+            updateLikes(likeNumber, totalLikes, displaLikes)
+          );
           mediaElement.addEventListener("click", handleMediaInteraction);
           mediaElement.addEventListener("keydown", handleMediaInteraction);
 
@@ -294,26 +296,6 @@ fetch(dataJson)
           fullSizeImg.innerHTML = `<video src="${selectedMedia.src}" type="video/mp4" controls></video>`;
         }
       }
-
-      // function updateLikes(span) {
-      //   let actualLike = parseInt(span.textContent);
-      //   console.log(span.getAttribute("data-incremented"));
-      //   console.log(actualLike);
-
-      //   if (span.getAttribute("data-incremented") === "true") {
-      //     span.removeAttribute("data-incremented");
-      //     actualLike -= 1;
-      //     totalLikes -= 1;
-      //     span.textContent = actualLike;
-      //   } else {
-      //     span.setAttribute("data-incremented", "true");
-      //     actualLike += 1;
-      //     totalLikes += 1;
-      //     span.textContent = actualLike;
-      //   }
-      //   allLikes.innerHTML = `${totalLikes} &#9829`;
-      // }
-
       // Gestionnaire d'événement pour la flèche gauche
       document.getElementById("leftDirection").addEventListener("click", () => {
         if (currentIndex > 0) {
