@@ -7,6 +7,7 @@ import {
 import { closeModalImg } from "../utils/displayBigImg";
 import { updateLikes } from "../utils/updateLikes";
 import { chevronDirection } from "../utils/chevronDirection";
+import { openFullScreen, displayFullSizeImage } from "../utils/modalMediasFullSize";
 // On récupère l'ID passé en paramètre
 const urlParams = new URLSearchParams(window.location.search);
 const idParam = urlParams.get("id");
@@ -153,10 +154,7 @@ fetch(dataJson)
           imageLike.appendChild(likeNumber);
 
           totalLikes += media.likes;
-          // mediaElement.addEventListener('click', (event) => {
-          //     const dataIndex = event.target.dataset.index
-          //     openFullScreen(dataIndex, document.getElementById('fullSizeImage'));
-          // });
+
           div.addEventListener("click", () =>
             updateLikes(likeNumber, totalLikes, displaLikes)
           );
@@ -170,12 +168,14 @@ fetch(dataJson)
               (event.type === "keydown" && event.code === "Enter")
             ) {
               const dataIndex = event.target.dataset.index;
-              openFullScreen(
+              const currentMediaElement = mediaElements[dataIndex]
+              openFullScreen(currentMediaElement, 
                 dataIndex,
                 document.getElementById("fullSizeImage")
               );
             }
           }
+          
         });
       }
 
@@ -258,34 +258,15 @@ fetch(dataJson)
       );
       mediaElements.forEach((media, index) => {
         media.addEventListener("click", () => {
-          openFullScreen(index, document.getElementById("fullSizeImage"));
+          currentIndex = index
+          openFullScreen(mediaElements, index, document.getElementById("fullSizeImage"));
         });
       });
-
-      function openFullScreen(index, fullSizeImg) {
-        const mediaModal = document.getElementById("img_modal");
-        mediaModal.style.display = "block";
-        displayFullSizeImage(index, fullSizeImg);
-        currentIndex = index; // Mettre à jour l'index courant
-
-        document.getElementById("leftDirection").focus();
-      }
-
-      function displayFullSizeImage(index, fullSizeImg) {
-        const selectedMedia = mediaElements[index];
-        if (selectedMedia.tagName === "IMG") {
-          // Si c'est une image, affichez la balise img
-          fullSizeImg.innerHTML = `<img src="${selectedMedia.src}" alt="${selectedMedia.alt}" />`;
-        } else if (selectedMedia.tagName === "VIDEO") {
-          // Si c'est une vidéo, affichez la balise video
-          fullSizeImg.innerHTML = `<video src="${selectedMedia.src}" type="video/mp4" controls></video>`;
-        }
-      }
-      // Gestionnaire d'événement pour la flèche gauche
+      
       document.getElementById("leftDirection").addEventListener("click", () => {
         if (currentIndex > 0) {
           currentIndex--; // Aller à l'image précédente si l'index est supérieur à 0
-          displayFullSizeImage(
+          displayFullSizeImage(mediaElements, 
             currentIndex,
             document.getElementById("fullSizeImage")
           );
@@ -297,7 +278,7 @@ fetch(dataJson)
         if (event.key === "ArrowLeft") {
           if (currentIndex > 0) {
             currentIndex--; // Aller à l'image précédente si l'index est supérieur à 0
-            displayFullSizeImage(
+            displayFullSizeImage(mediaElements, 
               currentIndex,
               document.getElementById("fullSizeImage")
             );
@@ -311,7 +292,7 @@ fetch(dataJson)
         .addEventListener("click", () => {
           if (currentIndex < mediaElements.length - 1) {
             currentIndex++; // Aller à l'image suivante si l'index est inférieur à la longueur totale des images
-            displayFullSizeImage(
+            displayFullSizeImage(mediaElements, 
               currentIndex,
               document.getElementById("fullSizeImage")
             );
