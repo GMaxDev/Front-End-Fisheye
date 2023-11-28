@@ -270,7 +270,7 @@ form input {
 
 #fullSizeImage img,
 #fullSizeImage video {
-  max-width: auto;
+  max-width: 100%;
   height: 70vh;
   object-fit: contain;
 }
