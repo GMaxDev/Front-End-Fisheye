@@ -5,7 +5,6 @@ import {
   displaybuttonFilter,
 } from "../utils/displayButtonFilter";
 import { closeModalImg } from "../utils/displayBigImg";
-import { updateLikes } from "../utils/updateLikes";
 import { chevronDirection } from "../utils/chevronDirection";
 import { openFullScreen, displayFullSizeImage } from "../utils/modalMediasFullSize";
 // On récupère l'ID passé en paramètre
@@ -155,8 +154,16 @@ fetch(dataJson)
 
           totalLikes += media.likes;
 
-          div.addEventListener("click", () =>
-            updateLikes(likeNumber, totalLikes, displaLikes)
+          div.addEventListener("click", () => {
+            media.toggleLike()
+            likeNumber.innerHTML = media.likes
+            if (media.isLiked){
+              totalLikes++
+            } else {
+              totalLikes--
+            }
+            displayLikes.innerHTML = `${totalLikes} &#9829`;
+          }
           );
           mediaElement.addEventListener("click", handleMediaInteraction);
           mediaElement.addEventListener("keydown", handleMediaInteraction);
@@ -317,9 +324,9 @@ fetch(dataJson)
       aside.setAttribute("id", "photographer-specs");
       main.appendChild(aside);
 
-      let displaLikes = document.createElement("p");
-      displaLikes.innerHTML = `${totalLikes} &#9829`;
-      aside.appendChild(displaLikes);
+      let displayLikes = document.createElement("p");
+      displayLikes.innerHTML = `${totalLikes} &#9829`;
+      aside.appendChild(displayLikes);
 
       const pricePhotorapher = document.createElement("p");
       pricePhotorapher.textContent = `${photographerPrice} € / jour`;
