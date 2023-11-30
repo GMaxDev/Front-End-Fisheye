@@ -14,6 +14,7 @@ import {
 const urlParams = new URLSearchParams(window.location.search);
 const idParam = urlParams.get("id");
 const dataJson = "/data/photographers.json";
+const myForm = document.getElementById('myForm');
 let currentIndex = 0;
 let totalLikes = 0;
 let photo = [];
@@ -124,6 +125,7 @@ fetch(dataJson)
             mediaElement = document.createElement("img");
             mediaElement.src = cheminImage;
             mediaElement.setAttribute("tabindex", "0");
+            mediaElement.setAttribute("alt", media.title)
           } else if (media.video) {
             const cheminVideo = `assets/images/list_medias_photographers/${shortName}/${media.video}`;
             mediaElement = document.createElement("video");
@@ -340,6 +342,19 @@ fetch(dataJson)
       const pricePhotorapher = document.createElement("p");
       pricePhotorapher.textContent = `${photographerPrice} € / jour`;
       aside.appendChild(pricePhotorapher);
+
+      //----------------------------------------------
+
+      myForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        // Récupère tous les champs du formulaire
+        const formFields = myForm.elements;
+      
+        // Affiche chaque champ dans la console
+        for (let i = 0; i < formFields.length; i++) {
+          console.log(`${formFields[i].id} : ${formFields[i].value}`);
+        }
+      });
 
       //----------------------------------------------
 
