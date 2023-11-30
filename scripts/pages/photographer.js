@@ -6,7 +6,10 @@ import {
 } from "../utils/displayButtonFilter";
 import { closeModalImg } from "../utils/displayBigImg";
 import { chevronDirection } from "../utils/chevronDirection";
-import { openFullScreen, displayFullSizeImage } from "../utils/modalMediasFullSize";
+import {
+  openFullScreen,
+  displayFullSizeImage,
+} from "../utils/modalMediasFullSize";
 // On récupère l'ID passé en paramètre
 const urlParams = new URLSearchParams(window.location.search);
 const idParam = urlParams.get("id");
@@ -155,16 +158,15 @@ fetch(dataJson)
           totalLikes += media.likes;
 
           div.addEventListener("click", () => {
-            media.toggleLike()
-            likeNumber.innerHTML = media.likes
-            if (media.isLiked){
-              totalLikes++
+            media.toggleLike();
+            likeNumber.innerHTML = media.likes;
+            if (media.isLiked) {
+              totalLikes++;
             } else {
-              totalLikes--
+              totalLikes--;
             }
             displayLikes.innerHTML = `${totalLikes} &#9829`;
-          }
-          );
+          });
           mediaElement.addEventListener("click", handleMediaInteraction);
           mediaElement.addEventListener("keydown", handleMediaInteraction);
 
@@ -175,14 +177,14 @@ fetch(dataJson)
               (event.type === "keydown" && event.code === "Enter")
             ) {
               const dataIndex = event.target.dataset.index;
-              const currentMediaElement = mediaElements[dataIndex]
-              openFullScreen(currentMediaElement, 
+              const currentMediaElement = mediaElements[dataIndex];
+              openFullScreen(
+                currentMediaElement,
                 dataIndex,
                 document.getElementById("fullSizeImage")
               );
             }
           }
-          
         });
       }
 
@@ -265,15 +267,20 @@ fetch(dataJson)
       );
       mediaElements.forEach((media, index) => {
         media.addEventListener("click", () => {
-          currentIndex = index
-          openFullScreen(mediaElements, index, document.getElementById("fullSizeImage"));
+          currentIndex = index;
+          openFullScreen(
+            mediaElements,
+            index,
+            document.getElementById("fullSizeImage")
+          );
         });
       });
-      
+
       document.getElementById("leftDirection").addEventListener("click", () => {
         if (currentIndex > 0) {
           currentIndex--; // Aller à l'image précédente si l'index est supérieur à 0
-          displayFullSizeImage(mediaElements, 
+          displayFullSizeImage(
+            mediaElements,
             currentIndex,
             document.getElementById("fullSizeImage")
           );
@@ -285,7 +292,8 @@ fetch(dataJson)
         if (event.key === "ArrowLeft") {
           if (currentIndex > 0) {
             currentIndex--; // Aller à l'image précédente si l'index est supérieur à 0
-            displayFullSizeImage(mediaElements, 
+            displayFullSizeImage(
+              mediaElements,
               currentIndex,
               document.getElementById("fullSizeImage")
             );
@@ -299,7 +307,8 @@ fetch(dataJson)
         .addEventListener("click", () => {
           if (currentIndex < mediaElements.length - 1) {
             currentIndex++; // Aller à l'image suivante si l'index est inférieur à la longueur totale des images
-            displayFullSizeImage(mediaElements, 
+            displayFullSizeImage(
+              mediaElements,
               currentIndex,
               document.getElementById("fullSizeImage")
             );
