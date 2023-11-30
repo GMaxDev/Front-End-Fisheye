@@ -18,6 +18,7 @@ const myForm = document.getElementById('myForm');
 let currentIndex = 0;
 let totalLikes = 0;
 let photo = [];
+let mediaElements = []
 console.log(`ID: ${idParam}`);
 
 const contactButtonElement = document.querySelector(".contact_button");
@@ -169,24 +170,38 @@ fetch(dataJson)
             }
             displayLikes.innerHTML = `${totalLikes} &#9829`;
           });
-          mediaElement.addEventListener("click", handleMediaInteraction);
-          mediaElement.addEventListener("keydown", handleMediaInteraction);
 
-          function handleMediaInteraction(event) {
-            // Vérifie si la touche pressée est la touche 'Entrée' (code 13) ou si c'est un clic
-            if (
-              event.type === "click" ||
-              (event.type === "keydown" && event.code === "Enter")
-            ) {
-              const dataIndex = event.target.dataset.index;
-              const currentMediaElement = mediaElements[dataIndex];
+          div.addEventListener("keydown", () => {
+            media.toggleLike();
+            likeNumber.innerHTML = media.likes;
+            if (media.isLiked) {
+              totalLikes++;
+            } else {
+              totalLikes--;
+            }
+            displayLikes.innerHTML = `${totalLikes} &#9829`;
+          })
+          
+          mediaElement.addEventListener("keydown", (event) => {
+            // Vérifier si la touche appuyée est "Escape" (code 27)
+            if (event.key === "Enter"){
+              openFullScreen(mediaElements, index, document.getElementById("fullSizeImage"));
+            }
+          })
+
+          mediaElements = document.querySelectorAll(
+            ".media-element img, .media-element video"
+          );
+          mediaElements.forEach((media, index) => {
+            media.addEventListener("click", () => {
+              currentIndex = index;
               openFullScreen(
-                currentMediaElement,
-                dataIndex,
+                mediaElements,
+                index,
                 document.getElementById("fullSizeImage")
               );
-            }
-          }
+            });
+          });
         });
       }
 
@@ -227,6 +242,7 @@ fetch(dataJson)
           currentFilter = filter;
           isAscending = true;
         }
+        totalLikes = 0;
         sortItems(currentFilter);
       }
 
@@ -263,20 +279,6 @@ fetch(dataJson)
       }
 
       //----------------------------------------------
-
-      const mediaElements = document.querySelectorAll(
-        ".media-element img, .media-element video"
-      );
-      mediaElements.forEach((media, index) => {
-        media.addEventListener("click", () => {
-          currentIndex = index;
-          openFullScreen(
-            mediaElements,
-            index,
-            document.getElementById("fullSizeImage")
-          );
-        });
-      });
 
       document.getElementById("leftDirection").addEventListener("click", () => {
         if (currentIndex > 0) {
@@ -323,6 +325,7 @@ fetch(dataJson)
           if (currentIndex < mediaElements.length - 1) {
             currentIndex++; // Aller à l'image suivante si l'index est inférieur à la longueur totale des images
             displayFullSizeImage(
+              mediaElements,
               currentIndex,
               document.getElementById("fullSizeImage")
             );
@@ -345,19 +348,6 @@ fetch(dataJson)
 
       //----------------------------------------------
 
-      myForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-        // Récupère tous les champs du formulaire
-        const formFields = myForm.elements;
-      
-        // Affiche chaque champ dans la console
-        for (let i = 0; i < formFields.length; i++) {
-          console.log(`${formFields[i].id} : ${formFields[i].value}`);
-        }
-      });
-
-      //----------------------------------------------
-
       const modal = document.getElementById(`modal-header`);
       if (modal) {
         const modalH2 = modal.querySelector("h2");
@@ -374,4 +364,17 @@ fetch(dataJson)
   })
   .catch((error) => {
     console.error("Erreur lors du chargement du JSON :", error);
+  });
+
+  //----------------------------------------------
+
+  myForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    // Récupère tous les champs du formulaire
+    const formFields = myForm.elements;
+  
+    // Affiche chaque champ dans la console
+    for (let i = 0; i < formFields.length; i++) {
+      console.log(`${formFields[i].id} : ${formFields[i].value}`);
+    }
   });

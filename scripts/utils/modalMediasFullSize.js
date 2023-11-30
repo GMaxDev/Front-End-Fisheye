@@ -9,11 +9,12 @@ export function openFullScreen(mediaElements, index, fullSizeImg) {
 
 export function displayFullSizeImage(mediaElements, index, fullSizeImg) {
   const selectedMedia = mediaElements[index];
-  if (selectedMedia.tagName === "IMG") {
+  if (selectedMedia && selectedMedia.tagName === "IMG") {
     // Si c'est une image, affichez la balise img
     fullSizeImg.innerHTML = `<img src="${selectedMedia.src}" alt="${selectedMedia.alt}" />`;
-  } else if (selectedMedia.tagName === "VIDEO") {
+  } else if (selectedMedia && selectedMedia.tagName === "VIDEO") {
     // Si c'est une vidéo, affichez la balise video
     fullSizeImg.innerHTML = `<video src="${selectedMedia.src}" type="video/mp4" controls></video>`;
   }
+  fullSizeImg.innerHTML += `<h3>${selectedMedia.alt}</h3>`
 }
