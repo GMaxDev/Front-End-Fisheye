@@ -9,6 +9,7 @@ export function openFullScreen(mediaElements, index, fullSizeImg) {
 
 export function displayFullSizeImage(mediaElements, index, fullSizeImg) {
     const selectedMedia = mediaElements[index];
+    const altAttributeValue = selectedMedia.getAttribute('alt');
     if (selectedMedia && selectedMedia.tagName === 'IMG') {
     // Si c'est une image, affichez la balise img
         fullSizeImg.innerHTML = `<img src="${selectedMedia.src}" alt="${selectedMedia.alt}" />`;
@@ -16,5 +17,5 @@ export function displayFullSizeImage(mediaElements, index, fullSizeImg) {
     // Si c'est une vidéo, affichez la balise video
         fullSizeImg.innerHTML = `<video src="${selectedMedia.src}" type="video/mp4" controls></video>`;
     }
-    fullSizeImg.innerHTML += `<h3>${selectedMedia.alt}</h3>`;
+    fullSizeImg.innerHTML += `<h3>${altAttributeValue}</h3>`;
 }

@@ -135,6 +135,7 @@ fetch(dataJson)
                         mediaElement.setAttribute('type', 'video/mp4');
                         mediaElement.dataset.index = index; // Ajoutez l'index en tant qu'attribut de données
                         mediaElement.setAttribute('tabindex', '0');
+                        mediaElement.setAttribute('alt', media.title);
                     }
                     const button = document.createElement('button');
                     button.setAttribute('class', 'media-element');
