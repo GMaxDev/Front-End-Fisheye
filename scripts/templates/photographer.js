@@ -9,6 +9,7 @@ export function photographerTemplate(data) {
         article.setAttribute('id', id);
         const img = document.createElement('img');
         img.setAttribute('src', picture);
+        img.setAttribute('alt', name);
         const h2 = document.createElement('h2');
         const h3 = document.createElement('h3');
         const h4 = document.createElement('h4');

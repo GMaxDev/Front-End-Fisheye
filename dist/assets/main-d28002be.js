@@ -1,2 +1,0 @@
-// eslint-disable-next-line linebreak-style
-import'./modulepreload-polyfill-3cfb730f.js';async function n(){try{const o=await fetch('/data/photographers.json');if(!o.ok)throw new Error('Erreur de lecture du fichier.json');return await o.json();}catch(r){return console.error('Erreur :',r),[];}}async function s(r){const o=document.querySelector('.photographer_section');r.forEach(t=>{const e=t(t).getUserCardDOM();o.appendChild(e);});}async function a(){const{photographers:r}=await n();s(r);}a();
