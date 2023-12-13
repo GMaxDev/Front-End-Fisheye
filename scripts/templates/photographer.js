@@ -13,7 +13,7 @@ export function photographerTemplate(data) {
         const h2 = document.createElement('h2');
         const h3 = document.createElement('h3');
         const h4 = document.createElement('h4');
-        const h5 = document.createElement('h5');
+        const h5 = document.createElement('h5'); 
         h2.textContent = name;
         h3.textContent = city + ', ' + country;
         h4.textContent = tagline;
